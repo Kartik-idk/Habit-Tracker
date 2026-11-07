@@ -2,6 +2,7 @@
 
 [![Java](https://img.shields.io/badge/Language-Java-ED8B00?logo=openjdk&logoColor=white)](#technology-stack)
 [![Architecture](https://img.shields.io/badge/Architecture-Console%20CLI%20%7C%20Flat--File%20Persistence-blue.svg)](#architecture--persistence)
+[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20External-success.svg)]()
 
 A lightweight console-based habit tracking utility written in Java that manages recurring habits, tracks completion streaks, and persists data across sessions using flat-file serialization.
 
@@ -10,6 +11,21 @@ A lightweight console-based habit tracking utility written in Java that manages 
 ## Overview
 
 **Habit Tracker** is a command-line interface (CLI) application built using standard Java. It enables users to register custom habits, record daily task completions to maintain active streaks, and persist state locally across terminal sessions without external database dependencies.
+
+---
+
+## Habit Lifecycle & State Machine
+
+```mermaid
+stateDiagram-v2
+    [*] --> Unmarked: Habit Registered / Day Reset (completedToday = false)
+    Unmarked --> DoneToday: Option 2 (Mark Done: streak + 1, completedToday = true)
+    DoneToday --> DoneToday: Subsequent Mark Attempts (Blocked / Already Completed)
+    DoneToday --> SavedToDisk: Automatic Serialization -> habits.txt
+    Unmarked --> ResetDay: Option 6 (Reset Day)
+    DoneToday --> ResetDay: Option 6 (Preserves streak count, resets completedToday = false)
+    ResetDay --> Unmarked
+```
 
 ---
 
@@ -110,4 +126,4 @@ The application relies solely on standard Java libraries (`java.util.*`, `java.i
 
 ## License & Permissions
 
-This project is an open source academic exercise created by [Kartik-idk](https://github.com/Kartik-idk). Refer to the repository author for usage and licensing inquiries.
+Open source educational software created by [Kartik-idk](https://github.com/Kartik-idk).
